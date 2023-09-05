@@ -1,0 +1,9 @@
+{
+  "Fun" : {
+    "Games:" : "**/roll** - Roll a six-sided die\n**/rps** - Rock paper scissors\n**/flip** - Flip a coin",
+    "Chat:" : "**/wave** - Wave to another user\n**/repeat** - Have the bot repeat a message\n**/hello** - Receive a hello message\n**/cat** - Receive a cat gif\n**/dog** - Receive a dog gif\n**/phart** - Receive the iconic Phartso gif"
+  },
+  "Admin (Requires Perms)" : {
+    "Chat:" : "**/purge** - Purge a specified number of lines\n**/avatar** - Display a user's avatar\n**/serverinfo** - Display server info\n**/userinfo** - Display user info\n**/setnick** - Change a user's nickname"
+  }
+}
