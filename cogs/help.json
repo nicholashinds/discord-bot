@@ -1,9 +1,25 @@
 {
   "Fun" : {
-    "Games:" : "**/roll** - Roll a six-sided die\n**/rps** - Rock paper scissors\n**/flip** - Flip a coin",
-    "Chat:" : "**/wave** - Wave to another user\n**/repeat** - Have the bot repeat a message\n**/hello** - Receive a hello message\n**/cat** - Receive a cat gif\n**/dog** - Receive a dog gif\n**/phart** - Receive the iconic Phartso gif"
+    "Title: Games": "title holder",
+    "roll" : "Roll a six-sided die",
+    "rps" : "Rock paper scissors",
+    "flip" : "Flip a coin",
+    "update1": "update embed",
+
+    "Title: Chat": "",
+    "wave" : "Wave to another user",
+    "repeat" : "Have the bot repeat a message",
+    "hello" : "Receive a hello message",
+    "cat" : "Receive a cat gif",
+    "dog" : "Receive a dog gif",
+    "phart" : "Receive the iconic Phartso gif"
   },
   "Admin (Requires Perms)" : {
-    "Chat:" : "**/purge** - Purge a specified number of lines\n**/avatar** - Display a user's avatar\n**/serverinfo** - Display server info\n**/userinfo** - Display user info\n**/setnick** - Change a user's nickname"
+    "Title: Chat" : "",
+    "purge" : "Purge a specified number of lines",
+    "avatar" : "Display a user's avatar",
+    "serverinfo" : "Display server info",
+    "userinfo" : "Display user info",
+    "setnick" : "Change a user's nickname"
   }
 }
