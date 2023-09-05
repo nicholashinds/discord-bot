@@ -2,3 +2,4 @@ venv
 .idea
 .git
 keys.py
+__pycache__
