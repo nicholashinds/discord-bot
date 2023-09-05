@@ -4,6 +4,7 @@
     "roll" : "Roll a six-sided die",
     "rps" : "Rock paper scissors",
     "flip" : "Flip a coin",
+    "rng" : "Generate a random number",
     "update1": "update embed",
 
     "Title: Chat": "",
