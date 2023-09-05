@@ -12,8 +12,8 @@ client.remove_command(name="help")
 async def on_ready():
     await client.change_presence(status=nextcord.Status.do_not_disturb,
                                  activity=nextcord.Activity(type=nextcord.ActivityType.listening, name="/help"))
-    print()
     print(f'Bot started at {datetime.datetime.now()}')
+    print()
 
 initial_extensions = []
 

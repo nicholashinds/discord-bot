@@ -13,11 +13,13 @@ class Admin(commands.Cog):
     @application_checks.has_permissions(administrator=True)
     async def purge(self, interaction: Interaction,
                     lines: int = SlashOption(description="Enter a number of lines to be purged")):
+        print(f"{datetime.datetime.now()}: {interaction.user.name} sent /purge with {lines} lines")
         await interaction.channel.purge(limit=lines)
         await interaction.response.send_message(f"{interaction.user.mention} Purged {lines} line(s)", ephemeral=True)
 
     @purge.error
     async def purge_error(self, interaction: Interaction, error):
+        print(f"{datetime.datetime.now()}: {interaction.user.name} sent /purge with insufficient perms")
         if isinstance(error, application_checks.ApplicationMissingPermissions):
             await interaction.response.send_message(f"{interaction.user.mention} Error. Insufficient permissions",
                                                     ephemeral=True)
@@ -25,6 +27,7 @@ class Admin(commands.Cog):
     @nextcord.slash_command(name="userinfo", description="Find a user's profile info")
     @application_checks.has_permissions(administrator=True)
     async def userinfo(self, interaction: Interaction, user: nextcord.Member = SlashOption(description="Choose member")):
+        print(f"{datetime.datetime.now()}: {interaction.user.name} sent /userinfo for {user.name}")
         embed = nextcord.Embed(title=user.name, color=nextcord.Color.blue(), timestamp=datetime.datetime.now())
         userData = {
             "User": user.mention,
@@ -38,10 +41,11 @@ class Admin(commands.Cog):
             embed.add_field(name=fieldName+":", value=fieldVal, inline=True)
         embed.set_footer(text=f"id: {user.id}")
         embed.set_thumbnail(user.display_avatar)
-        await interaction.send(embed=embed, ephemeral=True)
+        await interaction.send(embed=embed)
 
     @userinfo.error
     async def userinfo_error(self, interaction: Interaction, error):
+        print(f"{datetime.datetime.now()}: {interaction.user.name} sent /userinfo with insufficient perms")
         if isinstance(error, application_checks.ApplicationMissingPermissions):
             await interaction.response.send_message(f"{interaction.user.mention} Error. Insufficient permissions",
                                                     ephemeral=True)
@@ -49,13 +53,15 @@ class Admin(commands.Cog):
     @nextcord.slash_command(name="avatar", description="Generate a user's avatar")
     @application_checks.has_permissions(administrator=True)
     async def avatar(self, interaction: Interaction, user: nextcord.Member = SlashOption(description="Choose member")):
+        print(f"{datetime.datetime.now()}: {interaction.user.name} sent /avatar for {user.name}")
         embed = nextcord.Embed(title=f"Avatar of '{user.name}'", timestamp=datetime.datetime.now(),
                                color=nextcord.Color.blue())
         embed.set_image(url=user.avatar.url)
-        await interaction.send(embed=embed, ephemeral=True)
+        await interaction.send(embed=embed)
 
     @avatar.error
     async def avatar_error(self, interaction: Interaction, error):
+        print(f"{datetime.datetime.now()}: {interaction.user.name} sent /avatar with insufficient perms")
         if isinstance(error, application_checks.ApplicationMissingPermissions):
             await interaction.response.send_message(f"{interaction.user.mention} Error. Insufficient permissions",
                                                     ephemeral=True)
@@ -63,6 +69,7 @@ class Admin(commands.Cog):
     @nextcord.slash_command(name="serverinfo", description="Find server info")
     @application_checks.has_permissions(administrator=True)
     async def serverinfo(self, interaction: Interaction):
+        print(f"{datetime.datetime.now()}: {interaction.user.name} sent /serverinfo")
         guild = interaction.user.guild
         embed = nextcord.Embed(title=guild.name, color=nextcord.Color.blue(), timestamp=datetime.datetime.now())
         serverData = {
@@ -76,10 +83,11 @@ class Admin(commands.Cog):
             embed.add_field(name=fieldName+":", value=fieldVal, inline=True)
         embed.set_footer(text=f"id: {guild.id}")
         embed.set_thumbnail(guild.icon)
-        await interaction.send(embed=embed, ephemeral=True)
+        await interaction.send(embed=embed)
 
     @serverinfo.error
     async def avatar_error(self, interaction: Interaction, error):
+        print(f"{datetime.datetime.now()}: {interaction.user.name} sent /serverinfo with insufficient perms")
         if isinstance(error, application_checks.ApplicationMissingPermissions):
             await interaction.response.send_message(f"{interaction.user.mention} Error. Insufficient permissions",
                                                     ephemeral=True)
@@ -88,12 +96,14 @@ class Admin(commands.Cog):
     @application_checks.has_permissions(administrator=True, manage_nicknames=True)
     async def setnick(self, interaction: Interaction, user: nextcord.Member = SlashOption(description="Choose member"),
                       newnick: str = SlashOption(description="Enter a new nickname")):
+        print(f"{datetime.datetime.now()}: {interaction.user.name} sent /setnick for {user.name}")
         await user.edit(nick=newnick)
         await interaction.response.send_message(f"You have changed the nickname of {user.mention} to {newnick}",
                                                 ephemeral=True)
 
     @setnick.error
     async def setnick(self, interaction: Interaction, error):
+        print(f"{datetime.datetime.now()}: {interaction.user.name} sent /setnick with insufficient perms")
         if isinstance(error, application_checks.ApplicationMissingPermissions):
             await interaction.response.send_message(f"{interaction.user.mention} Error. Insufficient permissions",
                                                     ephemeral=True)

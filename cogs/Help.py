@@ -28,6 +28,7 @@ class Help(commands.Cog):
 
     @nextcord.slash_command(name="help", description="Receive info on all the commands")
     async def help(self, interaction: Interaction):
+        print(f"{datetime.datetime.now()}: {interaction.user.name} sent /help")
         currentPage = 0
 
         async def next_callback(interaction2):
