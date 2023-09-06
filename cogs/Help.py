@@ -3,7 +3,6 @@ import nextcord
 from nextcord.ext import commands
 from nextcord import Interaction, ButtonStyle
 from nextcord.ui import Button, View
-from keys import testServerId
 import json
 
 helpGuide = json.load(open("./cogs/help.json"))
@@ -26,11 +25,9 @@ def create_help_embed(page_num=0, interaction=None):
             page_description += f"**/{key}** - {val}\n"
 
     embed.add_field(name=current_field_name, value=page_description, inline=False)
-    embed.set_footer(text=f"Page {page_num + 1} of {len(list(helpGuide))}")
-    embed.set_thumbnail(
-        url="https://media.tenor.com/nuKGpea_I4gAAAAi/star-platinum-heritage-for-the-future.gif")
-    if interaction is not None:
-        embed.set_author(name=interaction.user.name, icon_url=interaction.user.avatar.url)
+    embed.set_footer(text=f"Requested by {interaction.user.name} • "
+                          f"Page {page_num + 1} of {len(list(helpGuide))}", icon_url=interaction.user.avatar.url)
+    embed.set_thumbnail(url="https://media.tenor.com/nuKGpea_I4gAAAAi/star-platinum-heritage-for-the-future.gif")
     return embed
 
 

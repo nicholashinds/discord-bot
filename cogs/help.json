@@ -1,26 +1,42 @@
 {
-  "Fun" : {
+  "Fun": {
     "Title: Games": "title holder",
-    "roll" : "Roll a six-sided die",
-    "rps" : "Rock paper scissors",
-    "flip" : "Flip a coin",
-    "rng" : "Generate a random number",
+    "roll": "Roll a six-sided die",
+    "rps": "Rock paper scissors",
+    "flip": "Flip a coin",
+    "rng": "Generate a random number",
     "update1": "update embed",
 
     "Title: Chat": "",
-    "wave" : "Wave to another user",
-    "repeat" : "Have the bot repeat a message",
-    "hello" : "Receive a hello message",
-    "cat" : "Receive a cat gif",
-    "dog" : "Receive a dog gif",
-    "phart" : "Receive the iconic Phartso gif"
+    "wave": "Wave to another user",
+    "repeat": "Have the bot repeat a message",
+    "hello": "Receive a hello message",
+    "cat": "Receive a cat gif",
+    "dog": "Receive a dog gif",
+    "phart": "Receive the iconic Phartso gif"
   },
-  "Admin (Requires Perms)" : {
-    "Title: Chat" : "",
-    "purge" : "Purge a specified number of lines",
-    "avatar" : "Display a user's avatar",
-    "serverinfo" : "Display server info",
-    "userinfo" : "Display user info",
-    "setnick" : "Change a user's nickname"
+  "Info": {
+    "Title: User Info": "",
+    "avatar": "Get a user's avatar",
+    "userinfo": "Get info about a user",
+    "update1": "",
+
+    "Title: Server": "",
+    "serverinfo": "Get info about the server",
+    "roles": "View the roles of the server"
+  },
+  "Admin (Requires Perms)": {
+    "Title: Chat": "",
+    "purge": "Purge a specified number of lines",
+    "setnick": "Change a user's nickname",
+    "update1": "",
+
+    "Title: Moderation Tools": "",
+    "kick": "Kick a member from the server",
+    "ban": "Ban a member from the server",
+    "mute": "Mute a member of the server",
+    "softban": "Softban a member of the server",
+    "unban": "Unban a member from the server",
+    "unmute": "Unmute a member of the server"
   }
 }

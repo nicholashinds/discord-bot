@@ -3,7 +3,7 @@ import random
 import nextcord
 from nextcord.ext import commands
 from nextcord import Interaction, SlashOption
-from keys import testServerId, dogAPI, catAPI
+from keys import dogAPI, catAPI
 import requests
 
 
