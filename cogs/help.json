@@ -23,7 +23,11 @@
 
     "Title: Server": "",
     "serverinfo": "Get info about the server",
-    "roles": "View the roles of the server"
+    "roles": "View the roles of the server",
+    "update2": "",
+
+    "Title: Bot": "",
+    "uptime": "Get bot uptime duration"
   },
   "Admin (Requires Perms)": {
     "Title: Chat": "",

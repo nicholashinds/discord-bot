@@ -1,8 +1,10 @@
+import datetime
 import nextcord
 from nextcord.ext import commands
 import os
 from keys import botToken
 from functions import get_time
+
 
 client = commands.Bot(intents=nextcord.Intents.all())
 client.remove_command(name="help")
@@ -12,6 +14,10 @@ client.remove_command(name="help")
 async def on_ready():
     await client.change_presence(status=nextcord.Status.do_not_disturb,
                                  activity=nextcord.Activity(type=nextcord.ActivityType.listening, name="/help"))
+    f = open("./uptime.txt", "w")
+    time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    f.write(f"{time}")
+    f.close()
     print(f'Bot started: {get_time()}')
     print()
 

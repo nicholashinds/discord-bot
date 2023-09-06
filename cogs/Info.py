@@ -1,9 +1,11 @@
 import datetime
+import humanfriendly
 import nextcord
 from nextcord.ext import commands
 from nextcord import Interaction, SlashOption, ButtonStyle
 from nextcord.ui import Button, View
 from functions import get_time
+from datetime import datetime
 
 
 def role_embed_generator(interaction: Interaction):
@@ -120,7 +122,7 @@ class Info(commands.Cog):
         myview = View(timeout=180)
 
         async def roll_callback(z):
-            print(f"{datetime.datetime.now()}: {interaction.user.name} sent /roles")
+            print(f"{get_time()}: {interaction.user.name} sent /roles")
             await interaction.send(embed=role_embed_generator(interaction), ephemeral=True)
 
         roles_button.callback = roll_callback
@@ -131,6 +133,16 @@ class Info(commands.Cog):
     async def roles(self, interaction: Interaction):
         print(f"{get_time()}: {interaction.user.name} sent /roles")
         await interaction.send(embed=role_embed_generator(interaction))
+
+    @nextcord.slash_command(name="uptime", description="View current bot uptime")
+    async def uptime(self, interaction: Interaction):
+        f = open("uptime.txt", "r")
+        start_time = datetime.strptime(f.read(), "%Y-%m-%d %H:%M:%S")
+        current_time = datetime.strptime(datetime.now().strftime("%Y-%m-%d %H:%M:%S"), "%Y-%m-%d %H:%M:%S")
+        uptime = current_time - start_time
+        time_string = humanfriendly.format_timespan(uptime.total_seconds())
+        print(f"{get_time()}: {interaction.user.name} sent /uptime")
+        await interaction.response.send_message(f"The current uptime for the bot is `{time_string}`")
 
 
 def setup(client):

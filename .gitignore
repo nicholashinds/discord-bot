@@ -3,3 +3,4 @@ venv
 .git
 keys.py
 __pycache__
+uptime.txt
