@@ -32,7 +32,7 @@ def role_embed_generator(interaction: Interaction):
     role_list_string = "\n".join(role_list)
 
     role_embed = nextcord.Embed(title=f"Roles ({role_amount})",
-                                description=role_list_string, color=top_color, timestamp=datetime.datetime.now())
+                                description=role_list_string, color=top_color, timestamp=datetime.now())
     role_embed.set_footer(text=f"Requested by {interaction.user.name}", icon_url=interaction.user.avatar.url)
     return role_embed
 
@@ -66,7 +66,7 @@ class Info(commands.Cog):
         role_list.reverse()
         role_list_string = " ".join(role_list)
 
-        embed = nextcord.Embed(color=top_color, timestamp=datetime.datetime.now())
+        embed = nextcord.Embed(color=top_color, timestamp=datetime.now())
         embed.set_author(name=user.name, icon_url=user.avatar.url)
         embed.add_field(name="", value=f"{user.mention} (id: {user.id})", inline=False)
         embed.add_field(name="Account Creation",
@@ -83,7 +83,7 @@ class Info(commands.Cog):
     @nextcord.slash_command(name="avatar", description="Generate a user's avatar")
     async def avatar(self, interaction: Interaction, user: nextcord.Member = SlashOption(description="Choose member")):
         print(f"{get_time()}: {interaction.user.name} sent /avatar for {user.name}")
-        embed = nextcord.Embed(title=f"Avatar of '{user.name}'", timestamp=datetime.datetime.now(),
+        embed = nextcord.Embed(title=f"Avatar of '{user.name}'", timestamp=datetime.now(),
                                color=nextcord.Color.blue())
         embed.set_image(url=user.avatar.url)
         embed.set_footer(text=f"Requested by {interaction.user.name}", icon_url=interaction.user.avatar.url)
@@ -94,7 +94,7 @@ class Info(commands.Cog):
         print(f"{get_time()}: {interaction.user.name} sent /serverinfo")
 
         guild = interaction.user.guild
-        embed = nextcord.Embed(color=nextcord.Color.blue(), timestamp=datetime.datetime.now())
+        embed = nextcord.Embed(color=nextcord.Color.blue(), timestamp=datetime.now())
         embed.set_author(name=interaction.guild.name, icon_url=interaction.guild.icon.url)
         embed.add_field(name="Owner", value=guild.owner.mention, inline=True)
         embed.add_field(name="Members", value=guild.member_count, inline=True)

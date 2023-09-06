@@ -87,7 +87,7 @@ class Admin(commands.Cog):
             await interaction.response.send_message(f"You have banned {user.mention} for reason: None listed",
                                                     ephemeral=True)
         else:
-            print(f"{datetime.datetime.now()}: {interaction.user.name} sent /ban for {user.name} Reason: {reason}")
+            print(f"{get_time()}: {interaction.user.name} sent /ban for {user.name} Reason: {reason}")
             await user.ban(reason=reason)
             await interaction.response.send_message(f"You have banned {user.mention} for reason: {reason}",
                                                     ephemeral=True)
@@ -112,7 +112,7 @@ class Admin(commands.Cog):
             await interaction.response.send_message(f"You have unbanned {user.mention} for reason: None listed",
                                                     ephemeral=True)
         else:
-            print(f"{datetime.datetime.now()}: {interaction.user.name} sent /unban for {user.name} Reason: {reason}")
+            print(f"{get_time()}: {interaction.user.name} sent /unban for {user.name} Reason: {reason}")
             await interaction.user.guild.unban(user=user, reason=reason)
             await interaction.response.send_message(f"You have unbanned {user.mention} for reason: {reason}",
                                                     ephemeral=True)
