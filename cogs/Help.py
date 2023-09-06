@@ -3,6 +3,7 @@ import nextcord
 from nextcord.ext import commands
 from nextcord import Interaction, ButtonStyle
 from nextcord.ui import Button, View
+from functions import get_time
 import json
 
 helpGuide = json.load(open("./cogs/help.json"))
@@ -37,7 +38,7 @@ class Help(commands.Cog):
 
     @nextcord.slash_command(name="help", description="Receive info on all the commands")
     async def help(self, interaction: Interaction):
-        print(f"{datetime.datetime.now()}: {interaction.user.name} sent /help")
+        print(f"{get_time()}: {interaction.user.name} sent /help")
         current_page = 0
 
         async def next_callback(z):
