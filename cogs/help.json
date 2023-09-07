@@ -27,7 +27,8 @@
     "update2": "",
 
     "Title: Bot": "",
-    "uptime": "Get bot uptime duration"
+    "uptime": "Get bot uptime duration",
+    "botinfo": "Get information about the bot"
   },
   "Admin (Requires Perms)": {
     "Title: Chat": "",

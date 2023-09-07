@@ -144,6 +144,24 @@ class Info(commands.Cog):
         print(f"{get_time()}: {interaction.user.name} sent /uptime")
         await interaction.response.send_message(f"The current uptime for the bot is {time_string}")
 
+    @nextcord.slash_command(name="botinfo", description="View information about the bot", guild_ids=[testServerId])
+    async def botinfo(self, interaction: Interaction):
+        print(f"{get_time()}: {interaction.user.name} sent /botinfo")
+        embed = nextcord.Embed(title="Bot Info", color=nextcord.Color.blue(), timestamp=datetime.now())
+        embed.set_footer(text=f"Requested by {interaction.user.name}", icon_url=interaction.user.avatar.url)
+        embed.add_field(name="Purpose", value="Warden started development in August 2023 as a personal coding project. "
+                                              "I plan to continue updating the bot with new features for a while since "
+                                              "I use the bot in my own server. If you're reading this and have any "
+                                              "suggestions, feel free to reach out through the links below! :smiley:",
+                        inline=False)
+        embed.add_field(name="Links", value="GitHub - https://github.com/nicholashinds (repo is currently private)\n "
+                                            "LinkedIn - https://www.linkedin.com/in/nicholashinds/\n"
+                                            "Testing Server - https://discord.gg/A7Gyw6yE9Q (suggestions here)",
+                        inline=False)
+        embed.add_field(name="", value="Developed by @curmley\n:sunglasses:", inline=False)
+        embed.set_thumbnail(url="https://media.tenor.com/6T6riBrOpXcAAAAi/jotaro.gif")
+        await interaction.send(embed=embed)
+
 
 def setup(client):
     client.add_cog(Info(client))
