@@ -6,6 +6,19 @@ from nextcord import Interaction, SlashOption
 from functions import get_time
 
 
+def insuff_perms_embed(interaction: Interaction):
+    embed = nextcord.Embed(color=nextcord.Color.red(),
+                           description=f"❌ {interaction.user.mention} **Error.** Insufficient permissions")
+    return embed
+
+
+def unknown_error_embed(interaction: Interaction):
+    embed = nextcord.Embed(color=nextcord.Color.red(),
+                           description=f"❌ {interaction.user.mention} **Error.** Unknown error occurred. "
+                                       f"Please check your input and try again")
+    return embed
+
+
 class Admin(commands.Cog):
     def __init__(self, client):
         self.client = client
@@ -15,18 +28,18 @@ class Admin(commands.Cog):
     async def purge(self, interaction: Interaction,
                     lines: int = SlashOption(description="Enter a number of lines to be purged")):
         print(f"{get_time()}: {interaction.user.name} sent /purge with {lines} lines")
+        embed = nextcord.Embed(color=nextcord.Color.green(),
+                               description=f"✅ **Success.** Purged {lines} line(s)")
         await interaction.channel.purge(limit=lines)
-        await interaction.response.send_message(f"{interaction.user.mention} Purged {lines} line(s)", ephemeral=True)
+        await interaction.send(embed=embed, ephemeral=True)
 
     @purge.error
     async def purge_error(self, interaction: Interaction, error):
         print(f"{get_time()}: {interaction.user.name} sent /purge with insufficient perms")
         if isinstance(error, application_checks.ApplicationMissingPermissions):
-            await interaction.response.send_message(f"{interaction.user.mention} Error. Insufficient permissions",
-                                                    ephemeral=True)
+            await interaction.send(embed=insuff_perms_embed(interaction), ephemeral=True)
         else:
-            await interaction.response.send_message(f"{interaction.user.mention} Error occurred. "
-                                                    f"Please check input and try again", ephemeral=True)
+            await interaction.send(embed=unknown_error_embed(interaction), ephemeral=True)
 
     @nextcord.slash_command(name="setnick", description="Change a user's nickname")
     @application_checks.has_permissions(administrator=True)
@@ -35,21 +48,22 @@ class Admin(commands.Cog):
         print(f"{get_time()}: {interaction.user.name} sent /setnick for {user.name}")
         await user.edit(nick=newnick)
         if newnick is None:
-            await interaction.response.send_message(f"You have reset the nickname of {user.mention}",
-                                                    ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.green(),
+                                   description=f"✅ **Success.** You have reset the nickname of {user.mention}")
+            await interaction.send(embed=embed, ephemeral=True)
         else:
-            await interaction.response.send_message(f"You have changed the nickname of {user.mention} to {newnick}",
-                                                    ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.green(),
+                                   description=f"✅ **Success.** You have "
+                                               f"changed the nickname of {user.mention} to {newnick}")
+            await interaction.send(embed=embed, ephemeral=True)
 
     @setnick.error
     async def setnick_error(self, interaction: Interaction, error):
         print(f"{get_time()}: {interaction.user.name} sent /setnick with insufficient perms")
         if isinstance(error, application_checks.ApplicationMissingPermissions):
-            await interaction.response.send_message(f"{interaction.user.mention} Error. Insufficient permissions",
-                                                    ephemeral=True)
+            await interaction.send(embed=insuff_perms_embed(interaction), ephemeral=True)
         else:
-            await interaction.response.send_message(f"{interaction.user.mention} Error occurred. "
-                                                    f"Please check input and try again", ephemeral=True)
+            await interaction.send(embed=unknown_error_embed(interaction), ephemeral=True)
 
     @nextcord.slash_command(name="kick", description="Kick a member from the server")
     @application_checks.has_permissions(administrator=True)
@@ -58,24 +72,23 @@ class Admin(commands.Cog):
         if reason is None:
             print(f"{get_time()}: {interaction.user.name} sent /kick for {user.name} Reason: None listed")
             await user.kick(reason=f"Kicked by {interaction.user.name}")
-            await interaction.response.send_message(f"You have kicked {user.name} for reason: None listed",
-                                                    ephemeral=True)
-
+            embed = nextcord.Embed(color=nextcord.Color.green(),
+                                   description=f"✅ **Success.** You have kicked {user.mention} for reason: None listed")
+            await interaction.send(embed=embed, ephemeral=True)
         else:
             print(f"{get_time()}: {interaction.user.name} sent /kick for {user.name} Reason: {reason}")
             await user.kick(reason=reason)
-            await interaction.response.send_message(f"You have kicked {user.name} for reason: {reason}",
-                                                    ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.green(),
+                                   description=f"✅ **Success.** You have kicked {user.mention} for reason: {reason}")
+            await interaction.send(embed=embed, ephemeral=True)
 
     @kick.error
     async def kick_error(self, interaction: Interaction, error):
         print(f"{get_time()}: {interaction.user.name} sent /kick with insufficient perms")
         if isinstance(error, application_checks.ApplicationMissingPermissions):
-            await interaction.response.send_message(f"{interaction.user.mention} Error. Insufficient permissions",
-                                                    ephemeral=True)
+            await interaction.send(embed=insuff_perms_embed(interaction), ephemeral=True)
         else:
-            await interaction.response.send_message(f"{interaction.user.mention} Error occurred. "
-                                                    f"Please check input and try again", ephemeral=True)
+            await interaction.send(embed=unknown_error_embed(interaction), ephemeral=True)
 
     @nextcord.slash_command(name="ban", description="Ban a member from the server")
     @application_checks.has_permissions(administrator=True)
@@ -84,23 +97,23 @@ class Admin(commands.Cog):
         if reason is None:
             print(f"{get_time()}: {interaction.user.name} sent /ban for {user.name} Reason: None listed")
             await user.ban(reason=f"Banned by {interaction.user.name}")
-            await interaction.response.send_message(f"You have banned {user.mention} for reason: None listed",
-                                                    ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.green(),
+                                   description=f"✅ **Success.** You have banned {user.mention} for reason: None listed")
+            await interaction.send(embed=embed, ephemeral=True)
         else:
             print(f"{get_time()}: {interaction.user.name} sent /ban for {user.name} Reason: {reason}")
             await user.ban(reason=reason)
-            await interaction.response.send_message(f"You have banned {user.mention} for reason: {reason}",
-                                                    ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.green(),
+                                   description=f"✅ **Success.** You have banned {user.mention} for reason: {reason}")
+            await interaction.send(embed=embed, ephemeral=True)
 
     @ban.error
     async def ban_error(self, interaction: Interaction, error):
         print(f"{get_time()}: {interaction.user.name} sent /ban with insufficient perms")
         if isinstance(error, application_checks.ApplicationMissingPermissions):
-            await interaction.response.send_message(f"{interaction.user.mention} Error. Insufficient permissions",
-                                                    ephemeral=True)
+            await interaction.send(embed=insuff_perms_embed(interaction), ephemeral=True)
         else:
-            await interaction.response.send_message(f"{interaction.user.mention} Error occurred. "
-                                                    f"Please check input and try again", ephemeral=True)
+            await interaction.send(embed=unknown_error_embed(interaction), ephemeral=True)
 
     @nextcord.slash_command(name="unban", description="Unban a member from the server")
     @application_checks.has_permissions(administrator=True)
@@ -109,23 +122,23 @@ class Admin(commands.Cog):
         if reason is None:
             print(f"{get_time()}: {interaction.user.name} sent /unban for {user.name} Reason: None listed")
             await interaction.user.guild.unban(user=user, reason=f"Unbanned by {interaction.user.name}")
-            await interaction.response.send_message(f"You have unbanned {user.mention} for reason: None listed",
-                                                    ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.green(),
+                                   description=f"✅ **Success.** You have unbanned {user.mention} for reason: None listed")
+            await interaction.send(embed=embed, ephemeral=True)
         else:
             print(f"{get_time()}: {interaction.user.name} sent /unban for {user.name} Reason: {reason}")
             await interaction.user.guild.unban(user=user, reason=reason)
-            await interaction.response.send_message(f"You have unbanned {user.mention} for reason: {reason}",
-                                                    ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.green(),
+                                   description=f"✅ **Success.** You have unbanned {user.mention} for reason: {reason}")
+            await interaction.send(embed=embed, ephemeral=True)
 
     @unban.error
     async def unban_error(self, interaction: Interaction, error):
         print(f"{get_time()}: {interaction.user.name} sent /unban with insufficient perms")
         if isinstance(error, application_checks.ApplicationMissingPermissions):
-            await interaction.response.send_message(f"{interaction.user.mention} Error. Insufficient permissions",
-                                                    ephemeral=True)
+            await interaction.send(embed=insuff_perms_embed(interaction), ephemeral=True)
         else:
-            await interaction.response.send_message(f"{interaction.user.mention} Error occurred. "
-                                                    f"Please check input and try again", ephemeral=True)
+            await interaction.send(embed=unknown_error_embed(interaction), ephemeral=True)
 
     @nextcord.slash_command(name="mute", description="Mute a member of the server")
     @application_checks.has_permissions(administrator=True)
@@ -137,23 +150,25 @@ class Admin(commands.Cog):
             print(f"{get_time()}: {interaction.user.name} sent /mute for {user.name} Reason: None listed")
             await user.edit(timeout=nextcord.utils.utcnow()+datetime.timedelta(seconds=time),
                             reason=f"Muted by {interaction.user.name} for {time_str}")
-            await interaction.response.send_message(f"You have muted {user.mention} for {time_str}. "
-                                                    f"Reason: None listed", ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.green(),
+                                   description=f"✅ **Success.** You have muted {user.mention} for {time_str}. "
+                                               f"Reason: None listed")
+            await interaction.send(embed=embed, ephemeral=True)
         else:
             print(f"{get_time()}: {interaction.user.name} sent /mute for {user.name} Reason: {reason}")
             await user.edit(timeout=nextcord.utils.utcnow()+datetime.timedelta(seconds=time), reason=reason)
-            await interaction.response.send_message(f"You have muted {user.mention} for {time_str}. "
-                                                    f"Reason: {reason}", ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.green(),
+                                   description=f"✅ **Success.** You have muted {user.mention} for {time_str}. "
+                                               f"Reason: {reason}")
+            await interaction.send(embed=embed, ephemeral=True)
 
     @mute.error
     async def mute_error(self, interaction: Interaction, error):
         print(f"{get_time()}: {interaction.user.name} sent /mute with insufficient perms")
         if isinstance(error, application_checks.ApplicationMissingPermissions):
-            await interaction.response.send_message(f"{interaction.user.mention} Error. Insufficient permissions",
-                                                    ephemeral=True)
+            await interaction.send(embed=insuff_perms_embed(interaction), ephemeral=True)
         else:
-            await interaction.response.send_message(f"{interaction.user.mention} Error occurred. "
-                                                    f"Please check input and try again", ephemeral=True)
+            await interaction.send(embed=unknown_error_embed(interaction), ephemeral=True)
 
     @nextcord.slash_command(name="unmute", description="Unmute a member of the server")
     @application_checks.has_permissions(administrator=True)
@@ -162,23 +177,24 @@ class Admin(commands.Cog):
         if reason is None:
             print(f"{get_time()}: {interaction.user.name} sent /unmute for {user.name} Reason: None listed")
             await user.edit(timeout=None, reason=f"Unmuted by {interaction.user.name}")
-            await interaction.response.send_message(f"You have unmuted {user.mention} for reason: None listed",
-                                                    ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.green(),
+                                   description=f"✅ **Success.** "
+                                               f"You have unmuted {user.mention} for reason: None listed")
+            await interaction.send(embed=embed, ephemeral=True)
         else:
             print(f"{get_time()}: {interaction.user.name} sent /unmute for {user.name} Reason: {reason}")
             await user.edit(timeout=None, reason=reason)
-            await interaction.response.send_message(f"You have unmuted {user.mention} for reason: {reason}",
-                                                    ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.green(),
+                                   description=f"✅ **Success.** You have unmuted {user.mention} for reason: {reason}")
+            await interaction.send(embed=embed, ephemeral=True)
 
     @unmute.error
     async def unmute_error(self, interaction: Interaction, error):
         print(f"{get_time()}: {interaction.user.name} sent /unmute with insufficient perms")
         if isinstance(error, application_checks.ApplicationMissingPermissions):
-            await interaction.response.send_message(f"{interaction.user.mention} Error. Insufficient permissions",
-                                                    ephemeral=True)
+            await interaction.send(embed=insuff_perms_embed(interaction), ephemeral=True)
         else:
-            await interaction.response.send_message(f"{interaction.user.mention} Error occurred. "
-                                                    f"Please check input and try again", ephemeral=True)
+            await interaction.send(embed=unknown_error_embed(interaction), ephemeral=True)
 
     @nextcord.slash_command(name="softban", description="Softban a user")
     @application_checks.has_permissions(administrator=True)
@@ -189,25 +205,26 @@ class Admin(commands.Cog):
                   f" sent /softban for {user.name} Reason: None listed")
             await user.ban(reason=f"Softbanned by {interaction.user.name}")
             await interaction.user.guild.unban(user=user, reason=f"Softban continuation by {interaction.user.name}")
-            await interaction.response.send_message(f"You have softbanned {user.mention} for reason: None listed",
-                                                    ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.green(),
+                                   description=f"✅ **Success.** "
+                                               f"You have softbanned {user.mention} for reason: None listed")
+            await interaction.send(embed=embed, ephemeral=True)
         else:
             print(f"{get_time()}: {interaction.user.name}"
                   f" sent /softban for {user.name} Reason: None listed")
             await user.ban(reason=reason)
             await interaction.user.guild.unban(user=user, reason=f"Softban continuation by {interaction.user.name}")
-            await interaction.response.send_message(f"You have softbanned {user.mention} for reason: {reason}",
-                                                    ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.green(),
+                                   description=f"✅ **Success.** You have banned {user.mention} for reason: {reason}")
+            await interaction.send(embed=embed, ephemeral=True)
 
     @softban.error
     async def softban_error(self, interaction: Interaction, error):
         print(f"{get_time()}: {interaction.user.name} sent /softban with insufficient perms")
         if isinstance(error, application_checks.ApplicationMissingPermissions):
-            await interaction.response.send_message(f"{interaction.user.mention} Error. Insufficient permissions",
-                                                    ephemeral=True)
+            await interaction.send(embed=insuff_perms_embed(interaction), ephemeral=True)
         else:
-            await interaction.response.send_message(f"{interaction.user.mention} Error occurred. "
-                                                    f"Please check input and try again", ephemeral=True)
+            await interaction.send(embed=unknown_error_embed(interaction), ephemeral=True)
 
 
 def setup(client):

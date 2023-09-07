@@ -32,9 +32,10 @@ class Messages(commands.Cog):
                    coins: int = SlashOption(name="coins", description="Enter number of coins to flip")):
         print(f"{get_time()}: {interaction.user.name} sent /flip")
         if coins <= 0 or coins >= 101:
-            await interaction.response.send_message(f"Error. `{coins}` is an invalid number of coins to flip. "
-                                                    f"Please choose a value between 1 and 100",
-                                                    ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.red(),
+                                   description=f"❌ **Error.** {coins} is an invalid number of coins to flip. "
+                                               f"Please choose a value between 1 and 100")
+            await interaction.send(embed=embed, ephemeral=True)
         else:
             flips = []
             final = []
@@ -55,9 +56,11 @@ class Messages(commands.Cog):
                    die_number: int = SlashOption(name="rolls", description="Enter number of dice to roll")):
         print(f"{get_time()}: {interaction.user.name} sent /roll")
         if die_number <= 0 or die_number >= 101:
-            await interaction.response.send_message(f"Error. `{die_number}` is an invalid number of dice to roll. "
-                                                    f"Please choice a value between 1 and 100",
-                                                    ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.red(),
+                                   description=f"❌ **Error.** {die_number} is an invalid number of dice to roll. "
+                                               f"Please choose a value between 1 and 100")
+            await interaction.send(embed=embed, ephemeral=True)
+
         else:
             rolls = []
             for i in range(die_number):
@@ -113,8 +116,11 @@ class Messages(commands.Cog):
                   upper_range: int = SlashOption(name="range", description="Enter upper range for number generation")):
         print(f"{get_time()}: {interaction.user.name} sent /rng")
         if upper_range <= 0:
-            await interaction.response.send_message(f"Error. `{upper_range}` is an invalid upper range. "
-                                                    f"Please provide a positive nonzero value", ephemeral=True)
+            embed = nextcord.Embed(color=nextcord.Color.red(),
+                                   description=f"❌ **Error.** {upper_range} is an invalid upper range. "
+                                               f"Please provide a positive nonzero value")
+            await interaction.send(embed=embed, ephemeral=True)
+
         else:
             await interaction.response.send_message(f"The generated number is `{random.randint(1, upper_range)}`")
 
