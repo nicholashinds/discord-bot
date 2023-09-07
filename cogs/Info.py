@@ -144,7 +144,7 @@ class Info(commands.Cog):
         print(f"{get_time()}: {interaction.user.name} sent /uptime")
         await interaction.response.send_message(f"The current uptime for the bot is {time_string}")
 
-    @nextcord.slash_command(name="botinfo", description="View information about the bot", guild_ids=[testServerId])
+    @nextcord.slash_command(name="botinfo", description="View information about the bot")
     async def botinfo(self, interaction: Interaction):
         print(f"{get_time()}: {interaction.user.name} sent /botinfo")
         embed = nextcord.Embed(title="Bot Info", color=nextcord.Color.blue(), timestamp=datetime.now())
