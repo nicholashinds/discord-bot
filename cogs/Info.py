@@ -142,7 +142,7 @@ class Info(commands.Cog):
         uptime = current_time - start_time
         time_string = humanfriendly.format_timespan(uptime.total_seconds())
         print(f"{get_time()}: {interaction.user.name} sent /uptime")
-        await interaction.response.send_message(f"The current uptime for the bot is `{time_string}`")
+        await interaction.response.send_message(f"The current uptime for the bot is {time_string}")
 
 
 def setup(client):

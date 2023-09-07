@@ -48,7 +48,7 @@ class Messages(commands.Cog):
                     final.append("Heads")
                 else:
                     final.append("Error")
-            await interaction.response.send_message(f"You have flipped `{', '.join(map(str, final))}`")
+            await interaction.response.send_message(f"You have flipped {', '.join(map(str, final))}")
 
     @nextcord.slash_command(name="roll", description="Have the bot roll a die")
     async def roll(self, interaction: Interaction,
@@ -65,7 +65,7 @@ class Messages(commands.Cog):
             rolls = []
             for i in range(die_number):
                 rolls.append(random.randint(1, die_value))
-            await interaction.response.send_message(f"You have rolled a `{', '.join(map(str, rolls))}`")
+            await interaction.response.send_message(f"You have rolled a {', '.join(map(str, rolls))}")
 
     @nextcord.slash_command(name="phart", description="Receive the iconic Phartso gif")
     async def phart(self, interaction: Interaction):
@@ -122,7 +122,7 @@ class Messages(commands.Cog):
             await interaction.send(embed=embed, ephemeral=True)
 
         else:
-            await interaction.response.send_message(f"The generated number is `{random.randint(1, upper_range)}`")
+            await interaction.response.send_message(f"The generated number is {random.randint(1, upper_range)}")
 
 
 def setup(client):
